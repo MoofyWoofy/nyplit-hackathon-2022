@@ -1,25 +1,73 @@
 @import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@500&display=swap');
 
-@media (prefers-reduced) {
-    *, *::before, *::after{
+@media (prefers-reduced-motion) {
+    *, *::before, *::after {
         animation-duration: 0.01ms !important;
         animation-iteration-count: 1 !important;
         transition-property: 0.01ms !important;
         scroll-behavior: auto;
     }
 }
+/* TODO: SET color for light/dark theme */
 :root {
-    --primary-colour:#f199f1;
-    --secondary-colour:#98e2d0;
+    /* Light Theme */
+    --nav-bar-color:#f0f0ef;
+        --splash-bg-color:#dfd8ce;
+        --splash-text-color:#5b271b;
+        --nav-color:#5e2121;
+
+        /* Section bg colors */
+        --section-2-bg-color:#9ebe9a;
+        --section-3-bg-color:#e6e68f;
+        --section-4-bg-color:#22c0ce;
+
+        --wave-top-color:#d1d1d1;
+        --wave-bottom-color:#FBFF7F;
+        
+        --text-input-color:#a622f0;
+        
+        --loader-border-color:#535454;
+        --loader-border-bar-color:#d91456;
+        
+        --button-color-one:#fbacac;
+        --button-color-two:#db7b005e;
+
+        --link-underline:#472500;
+        --title-color:linear-gradient(270deg, #eebe00, #8aaa7c, #ff7979);
+        --subtitle-color:#5b271b;
 }
+@media (prefers-color-scheme: dark) {
+    :root {
+        --nav-bar-color:#0f0f10;/*#292828;*/
+        --splash-bg-color:#202731;
+        --splash-text-color:#fff;
+        --nav-color:#a1dede;
+
+        /* Section bg colors */
+        --section-2-bg-color:#614165;
+        --section-3-bg-color:#191970;/* #3c31dd;*/
+        --section-4-bg-color:#dd3f31;
+
+        --wave-top-color:#2e2e2e;
+        --wave-bottom-color:#3D48DF;/*#B93909;*/
+
+        --text-input-color:#a1debc;
+
+        --loader-border-color:#acabab;
+        --loader-border-bar-color:#26eba9;
+
+        --button-color-one:#0d0d0d;
+        --button-color-two:#3e3e3e;
+
+        --link-underline:#b8daff;
+        --title-color:linear-gradient(270deg, #007eee, #6646bf, #45ffcb);
+        --subtitle-color:gray;
+    }
+}
+
 body {
-    font-family: 'Comfortaa', cursive;
+    font-family: 'Comfortaa', cursive, sans-serif;
     margin: 0;
-}
-section.splash {
-    width: 100vw;
-    height: 100vh;
-    background-color: aqua;
 }
 section {
     position: relative;
@@ -29,18 +77,46 @@ section {
     height: min(400px, 70%);
     padding: 4rem 20vw;
 }
-/* section:nth-child(1) {
-    color: blue;
-} */
+section:nth-child(1) {
+    height: 100vh;
+    background-color: var(--splash-bg-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+.title-div {
+	width: 40rem;
+	margin-bottom: 10rem;
+}
+h1.hero-title {
+    background-image: var(--title-color); /*linear-gradient(90deg, #ee6352, purple, #ee6352);*/
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    font-size: 3rem;
+}
+@media screen and (max-width:768px) {
+    h1.hero-title {
+        font-size: 1rem;
+    }
+}
+p.hero-subtitle {
+    font-size: smaller;
+    padding: 5%;
+    color: var(--subtitle-color);
+}
+section:nth-child(1) * {
+    /* color: var(--splash-text-color); */
+}
 section:nth-child(2) {
-    color: red;
-    background-color: hotpink;
+    background-color: var(--section-2-bg-color);
 }
 section:nth-child(3) {
-    color: #94961b;
+    background-color: var(--section-3-bg-color);
 }
 section:nth-child(4) {
-    color: green;
+    background-color: var(--section-4-bg-color);
 }
 .section-2-design {
     position: absolute;
@@ -67,14 +143,117 @@ section:nth-child(4) {
     line-height: 0;
     transform: rotate(180deg);
 }
-
 .section-3-design-bottom svg {
     position: relative;
     display: block;
     width: calc(100% + 1.3px);
     height: 150px;
 }
-
 .section-3-design-bottom .shape-fill {
-    fill: #FFFFFF;
+    fill: var(--wave-bottom-color);
+}
+.section-3-design-top .shape-fill {
+    fill: var(--wave-top-color);
+}
+
+/* NAV BAR */
+.main-nav {
+    position: fixed;
+    z-index: 50;
+    background-color: var(--nav-bar-color);
+    width: 100%;
+}
+.main-nav > ul {
+    list-style-type: none;
+    display: flex;
+    justify-content: flex-end;
+    gap: 2rem;
+    width: 95%;
+    margin: 0;
+}
+.main-nav > ul a {
+    text-decoration: none;
+    display: inline-block;
+    padding: 10px;
+    margin: 0;
+}
+.main-nav > ul a {
+    color: var(--nav-color);
+}
+.main-nav > ul a::after {
+    display: none;
+    content: '';
+    position: absolute;
+    width: 8ch;
+    height: 1px;
+    background-color: var(--link-underline);
+}
+.main-nav > ul a:hover::after {
+    display: block;
+}
+
+.wave-container {
+    /* position: relative; */
+    /* z-index: 10; */
+    margin-top: 8rem;
+    margin-bottom: 8rem;
+}
+.grid-container {
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    gap: 2rem;
+}
+/* Grid display for img */
+.display-image {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap:1rem;
+}
+input[type=number] {
+	background: transparent;
+	border: 1px solid;
+	color: var(--text-input-color);
+	font-size: 1rem;
+	width: 5ch;
+	border-radius: 10%;
+}
+img {
+    width: 100%;
+}
+
+/* Random utility classes */
+.block-display{
+    display: block;
+    margin: 1rem;
+}
+.loader {
+    position: absolute;
+    border: 6px solid var(--loader-border-color);
+    border-radius: 50%;
+    border-top: 6px solid var(--loader-border-bar-color);
+    width: 45px;
+    height: 45px;
+    animation: spinner 1s linear infinite;
+}
+@keyframes spinner {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+*, *::before, *::after {
+    box-sizing:border-box;
+    color: var(--splash-text-color);
+}
+button {
+    background-image: linear-gradient(var(--button-color-one), var(--button-color-two));/* linear-gradient(#bb86fc, #940eb5);*/
+    padding: 15px 35px;
+    border-radius: 3rem;
+    border: transparent;
+}
+.search-image {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.triangle{
+    fill: var(--splash-bg-color);
 }
